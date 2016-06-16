@@ -52,6 +52,6 @@ Just a simple learning management system for textbook-like sites.
   - Create migration
   - Update seed
   - Add DB query
-  - Add view
+  - Add view (CURRENT)
   - Write tests
   - Deploy

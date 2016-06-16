@@ -5,6 +5,13 @@ function getChapters() {
     .select('*');
 }
 
+function getSingleChapter(chapterID) {
+  return knex('chapters')
+    .select()
+    .where('id', chapterID);
+}
+
 module.exports = {
-  getChapters: getChapters
+  getChapters: getChapters,
+  getSingleChapter: getSingleChapter
 };

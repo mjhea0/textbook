@@ -5,15 +5,18 @@ exports.seed = function(knex, Promise) {
     // Inserts seed entries
     knex('chapters').insert({
       number: 1,
-      name: 'Functions and Loops'
+      name: 'Functions and Loops',
+      content: 'Functions and Loops are awesome!'
     }),
     knex('chapters').insert({
       number: 2,
-      name: 'Conditional logic'
+      name: 'Conditional logic',
+      content: 'Conditional logic is awesome!'
     }),
     knex('chapters').insert({
       number: 3,
-      name: 'Lists and Dictionaries'
+      name: 'Lists and Dictionaries',
+      content: 'Lists and Dictionaries are awesome!'
     })
   );
 };

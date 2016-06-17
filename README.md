@@ -52,6 +52,8 @@ Just a simple learning management system for textbook-like sites.
   - Create migration
   - Update seed
   - Add DB query
-  - Add view (CURRENT)
-  - Write tests
+  - Add route
+  - Add view
+  - Write tests (CURRENT)
   - Deploy
+1. User should be redirected to the previous page after sign in

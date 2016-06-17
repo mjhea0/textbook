@@ -16,6 +16,7 @@ if (process.env.NODE_ENV !== 'production' || 'staging') {
 // *** routes *** //
 var routes = require('./routes/index');
 var authRoutes = require('./routes/auth');
+var chapterRoutes = require('./routes/chapter');
 
 // *** express instance *** //
 var app = express();
@@ -46,32 +47,19 @@ app.use(express.static(path.join(__dirname, '../client')));
 // *** main routes *** //
 app.use('/', routes);
 app.use('/auth', authRoutes);
+app.use('/chapter', chapterRoutes);
 
-// catch 404 and forward to error handler
+// *** error handling *** //
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
+  err.customMessage = 'That page cannot be found.';
   err.status = 404;
   next(err);
 });
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
-    message: err.message,
+    message: err.customMessage || 'Something went wrong',
     error: {}
   });
 });

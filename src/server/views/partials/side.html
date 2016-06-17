@@ -5,7 +5,7 @@
       <h3>Chapters</h3>
       <br>
       {% for chapter in chapters %}
-        <li>{{chapter.name}}</li>
+        <li><a href="/chapter/{{chapter.id}}">{{chapter.name}}</a></li>
       {% endfor %}
     {% endif %}
   </ul>

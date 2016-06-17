@@ -17,17 +17,23 @@ describe('routes : index', function() {
 
   beforeEach(function(done) {
     passportStub.logout();
-    knex.migrate.latest()
+    knex.migrate.rollback()
     .then(function() {
-      done();
+      knex.migrate.latest()
+      .then(function() {
+        return knex.seed.run()
+        .then(function() {
+          done();
+        });
+      });
     });
   });
 
   afterEach(function(done) {
     knex.migrate.rollback()
-      .then(function() {
-        done();
-      });
+    .then(function() {
+      done();
+    });
   });
 
   describe('if unauthenticated', function() {
@@ -63,12 +69,12 @@ describe('routes : index', function() {
           res.status.should.equal(200);
           res.type.should.equal('text/html');
           res.text.should.contain(
-            '<h1 class="page-header">Textbook<small>&nbsp;learning management system</small</h1>');
+            '<h1 class="page-header">Textbook<small>&nbsp;learning management system</small></h1>');
           res.text.should.contain(
             '<li><a href="/auth/github">Sign in with Github</a></li>');
           res.text.should.not.contain('<li><a href="/auth/logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a></li>\n');
           res.text.should.not.contain(
-            '<h1 class="page-header">Textbook<small>&nbsp;dashboard</small</h1>');
+            '<h1 class="page-header">Textbook<small>&nbsp;dashboard</small></h1>');
           res.text.should.not.contain('<h3>Chapters</h3>');
           done();
         });
@@ -81,7 +87,7 @@ describe('routes : index', function() {
         .end(function(err, res) {
           res.status.should.equal(404);
           res.type.should.equal('text/html');
-          res.text.should.contain('Not Found');
+          res.text.should.contain('<p>That page cannot be found.</p>');
           done();
         });
       });
@@ -107,7 +113,7 @@ describe('routes : index', function() {
           res.text.should.contain(
             '<li><a href="/auth/logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a></li>\n');
           res.text.should.contain(
-            '<h1 class="page-header">Textbook<small>&nbsp;dashboard</small</h1>');
+            '<h1 class="page-header">Textbook<small>&nbsp;dashboard</small></h1>');
           res.text.should.contain('<h3>Chapters</h3>');
           res.text.should.not.contain(
             '<li><a href="/auth/github">Sign in with Github</a></li>');
